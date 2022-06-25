@@ -1,0 +1,33 @@
+{
+  "name": "sts-network",
+  "version": "1.0.0",
+  "author": "servingtokens.com <servingtokens.com@protonmail.com>",
+  "scripts": {
+    "postinstall": "npx next telemetry disable",
+    "build": "next build && npm run build-scripts",
+    "dev": "npm run docker-build",
+    "start": "npm run docker-build",
+    "docker-build": "docker build -t sts-network .",
+    "build:cli": "ncc build cli.js -o dist/cli",
+    "build:main": "ncc build main.js -o dist/main",
+    "build:sts-client-script": "ncc build data/self-service-api.js -o api/namespace/script",
+    "build-scripts": "concurrently 'npm:build:cli' 'npm:build:main' 'npm:build:sts-client-script'",
+    "test": "node main.test.js"
+   },
+   "main": "./dist/main/index.js",
+   "bin": {
+     "lucky": "./dist/cli/index.js"
+   },
+   "dependencies": {
+     "args": "^5.0.0",
+     "chalk": "^2.4.1"
+   },
+   "devDependencies": {
+    "next": "^12.1.0",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.2",
+    "@vercel/ncc": "latest",
+    "concurrently": "^4.1.0",
+    "strip-ansi": "^5.0.0"
+   }
+ }
